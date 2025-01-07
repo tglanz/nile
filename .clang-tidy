@@ -1,0 +1,20 @@
+Checks: >
+  *,
+  -llvmlibc-*,
+  -llvm-header-guard,-llvm-namespace-comment,
+  -readability-identifier-length,
+  -misc-include-cleaner,
+  -altera*,
+  -modernize-use-trailing-return-type,
+  -bugprone-exception-escape,
+  -clang-analyzer-optin-*,
+  -optin.cplusplus.UninitializedObject,
+  -clang-analyzer-optin.cplusplus.UninitializedObject
+SystemHeaders: 'false'
+FormatStyle: 'google'
+UseColor: 'true'
+WarningsAsErrors: '*'
+ImplementationFileExtensions: ['cpp']
+HeaderFileExtensions: ['h', 'hpp']
+CheckOptions:
+  readability-identifier-naming.ClassCase: 'CamelCase'
