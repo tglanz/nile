@@ -12,15 +12,15 @@ class Window {
   SDL_Window *window = nullptr;
   SDL_Surface *surface = nullptr;
 
-  bool initialize() {
+  void initialize() {
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
       spdlog::error("Failed to init SDL: {}", SDL_GetError());
-      return false;
+      return;
     }
 
     if (SDL_Vulkan_LoadLibrary(nullptr) < 0) {
       spdlog::error("Failed to load SDL Vulkan Library: {}", SDL_GetError());
-      return false;
+      return;
     }
 
     window = SDL_CreateWindow("Nile", SDL_WINDOWPOS_CENTERED,
@@ -29,17 +29,20 @@ class Window {
 
     if (!window) {
       spdlog::error("Failed to create SDL window: {}", SDL_GetError());
-      return false;
+      return;
     }
 
     surface = SDL_GetWindowSurface(window);
     if (!surface) {
       spdlog::error("Failed to get SDL surface: {}", SDL_GetError());
-      return false;
+      return;
     }
 
+    SDL_Rect rect = { .x = 0, .y = 0, .w = RES_WIDTH, .h = RES_HEIGHT };
+    Uint32 color = SDL_MapRGB(surface->format, 255, 255, 255);
+    SDL_FillRect(surface, &rect, color);
+
     SDL_UpdateWindowSurface(window);
-    return true;
   }
 
   void close() {
@@ -62,16 +65,17 @@ class Window {
   }
 
   static void runEventLoop(Renderer &renderer) {
-    spdlog::info("asidn");
-    // while (true) {
-    //   SDL_Event e;
-    //   while (SDL_PollEvent(&e) != 0) {
-    //     if (e.type == SDL_QUIT) {
-    //       break;
-    //     }
+    bool shouldQuit = false;
 
-    //     renderer.render();
-    //   }
-    // }
+    while (!shouldQuit) {
+      SDL_Event e;
+      while (SDL_PollEvent(&e) != 0) {
+        if (e.type == SDL_QUIT) {
+          shouldQuit = true;
+        }
+
+        renderer.render();
+      }
+    }
   }
 };

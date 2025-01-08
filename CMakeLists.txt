@@ -9,7 +9,6 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED YES)
 set(CMAKE_CXX_EXTENSIONS NO)
 
-
 if (CMAKE_CXX_COMPILER_ID MATCHES "Clang|AppleClang")
   add_compile_options(
     -Wall
