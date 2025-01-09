@@ -44,7 +44,7 @@ if (NOT DEFINED ENV{VULKAN_SDK})
 endif()
 include_directories($ENV{VULKAN_SDK}/include)
 link_libraries($ENV{VULKAN_SDK}/lib/libvulkan.dylib)
-# link_libraries($ENV{VULKAN_SDK}/lib/libMoltenVk.dylib)
+link_libraries($ENV{VULKAN_SDK}/lib/libMoltenVK.dylib)
 
 file(GLOB_RECURSE app_sources "${PROJECT_SOURCE_DIR}/nile/app/*.hpp" "${PROJECT_SOURCE_DIR}/nile/app/*.cpp")
 message("App sources: ${app_sources}")
