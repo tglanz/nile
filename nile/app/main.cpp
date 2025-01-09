@@ -9,15 +9,13 @@ int main() {
 
     Window window;
     if (!window.isInitialized()) {
-      spdlog::error("Window failed to initialize, aborting");
-      return -1;
+      throw std::runtime_error("Window failed to initialize, aborting");
     }
-
+    
     spdlog::info("Getting Vulkan extensions");
     auto extensions = window.getVulkanInstanceExtensions();
     if (!extensions.has_value()) {
-      spdlog::error("Cannot acquire Vulkan extensions");
-      return -1;
+      throw std::runtime_error("Cannot acquire Vulkan extensions");
     }
 
     RendererOptions rendererOptions = {
@@ -26,8 +24,7 @@ int main() {
     };
 
     Renderer renderer(rendererOptions);
-
-    // Window::runEventLoop(renderer);
+    Window::runEventLoop(renderer);
   } catch (std::exception& exception) {
     spdlog::error("An Error has ocured: {}", exception.what());
   } catch (...) {

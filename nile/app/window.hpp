@@ -6,6 +6,7 @@
 #include <vector>
 #include <optional>
 
+
 #include "nile/app/renderer.hpp"
 
 const int RES_WIDTH = 800;
@@ -54,7 +55,7 @@ class Window {
     return window != nullptr;
   }
 
-  std::optional<std::vector<std::string>> getVulkanInstanceExtensions() {
+  std::optional<std::vector<const char*>> getVulkanInstanceExtensions() {
     uint count;
 
     if (!SDL_Vulkan_GetInstanceExtensions(window, &count, NULL)) {
@@ -68,7 +69,7 @@ class Window {
       return {};
     }
 
-    return std::vector<std::string>(names.begin(), names.end());
+    return names;
   }
 
   static void runEventLoop(Renderer &renderer) {

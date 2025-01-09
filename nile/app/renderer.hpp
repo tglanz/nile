@@ -11,7 +11,7 @@ const std::vector<const char*> DEBUG_LAYERS = {"VK_LAYER_KHRONOS_validation"};
 
 struct RendererOptions {
   bool useDebugLayers;
-  std::vector<std::string> extensions;
+  std::vector<const char*> extensions;
 };
 
 struct InstanceInfo {
@@ -32,12 +32,8 @@ class Renderer {
         .apiVersion = VK_API_VERSION_1_3,
     };
 
-    std::vector<const char*> extensions(options.extensions.size());
-    std::transform(options.extensions.begin(), options.extensions.end(),
-                   extensions.begin(),
-                   [](const std::string& str) { return str.c_str(); });
-    extensions.push_back(
-        VK_KHR_GET_PHYSICAL_DEVICE_PROPERTIES_2_EXTENSION_NAME);
+    std::vector<const char*> extensions(options.extensions.begin(), options.extensions.end());
+    extensions.push_back(VK_KHR_GET_PHYSICAL_DEVICE_PROPERTIES_2_EXTENSION_NAME);
     extensions.push_back(VK_KHR_PORTABILITY_ENUMERATION_EXTENSION_NAME);
 
     for (auto& extension : extensions) {
@@ -54,7 +50,7 @@ class Renderer {
         .pNext = NULL,
         .pApplicationInfo = &applicationInfo,
         .enabledExtensionCount =
-            static_cast<uint32_t>(options.extensions.size()),
+            static_cast<uint32_t>(extensions.size()),
         .ppEnabledExtensionNames = extensions.data(),
         .enabledLayerCount = static_cast<uint32_t>(layers.size()),
         .ppEnabledLayerNames = layers.data(),
