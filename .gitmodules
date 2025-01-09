@@ -4,3 +4,6 @@
 [submodule "submodules/spdlog"]
 	path = submodules/spdlog
 	url = git@github.com:gabime/spdlog.git
+[submodule "submodules/Vulkan-Headers"]
+	path = submodules/Vulkan-Headers
+	url = git@github.com:KhronosGroup/Vulkan-Headers.git
